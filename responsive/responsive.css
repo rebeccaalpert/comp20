@@ -53,7 +53,9 @@
 @media screen
 	and (min-width: 700px)
 	and (max-width: 800px) {
-
+		.homer {
+			background:url(homer.jpg) 166.5px -250px;
+		}
 	}
 
 /* Display bottom left image */

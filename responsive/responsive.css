@@ -8,7 +8,7 @@
 @media screen
 	and (min-width: 1200px) {
 		.homer {
-			background:url(homer.jpg) 0 0px;
+			background:url(homer.jpg) 0px 0px;
 		}
 	}
 
@@ -17,29 +17,29 @@
 	and (min-width: 1100px)
 	and (max-width: 1200px) {
 		.homer {
-			background:url(homer.jpg) 166.5 0px;
+			background:url(homer.jpg) 166.5px 0px;
 		}
 
 }
 
 /* Display second image in left column */
 @media screen
-	and (max-width: 1000px)
-	and (min-width: 1100px) {
+	and (min-width: 1000px)
+	and (max-width: 1100px) {
 
 	}
 
 /* Display second image in right column */
 @media screen
-	and (max-width: 1000px)
-	and (min-width: 900px) {
+	and (min-width: 900px)
+	and (max-width: 1000px) {
 
 	}
 
 /* Display third image in left column */
 @media screen
-	and (max-width: 900px)
-	and (min-width: 800px) {
+	and (min-width: 800px)
+	and (max-width: 900px) {
 
 	}
 
@@ -60,5 +60,7 @@
 /* Display bottom right image */
 @media screen 
 	and (max-width: 600px) {
-
+		.homer {
+			background:url(homer.jpg) 166.5px 375px;
+		}
 	}

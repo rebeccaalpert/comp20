@@ -17,7 +17,7 @@
 	and (min-width: 1100px)
 	and (max-width: 1200px) {
 		.homer {
-			background:url(homer.jpg) 166.5px 0px;
+			background:url(homer.jpg) -166.5px 0px;
 		}
 
 }
@@ -26,7 +26,9 @@
 @media screen
 	and (min-width: 1000px)
 	and (max-width: 1100px) {
+		.homer {
 
+		}
 	}
 
 /* Display second image in right column */
@@ -61,6 +63,6 @@
 @media screen 
 	and (max-width: 600px) {
 		.homer {
-			background:url(homer.jpg) 166.5px 375px;
+			background:url(homer.jpg) -166.5px -375px;
 		}
 	}

@@ -44,7 +44,9 @@
 @media screen
 	and (min-width: 800px)
 	and (max-width: 900px) {
-
+		.homer {
+			background:url(homer.jpg) 0px -250px;
+		}
 	}
 
 /* Display third image in right column */

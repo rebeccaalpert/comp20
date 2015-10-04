@@ -1,8 +1,16 @@
 .homer {
 	width: 166.5px;
 	height: 125px;
-	
+
 }
+
+/* Display top left image */
+@media screen
+	and (min-width: 1200px) {
+		.homer {
+			background:url(homer.jpg) 0 0px;
+		}
+	}
 
 /* Display top right image */
 @media screen
@@ -14,10 +22,43 @@
 
 }
 
-/* Display top left image */
+/* Display second image in left column */
 @media screen
-	and (min-width: 1200px) {
-		.homer {
-			background:url(homer.jpg) 0 0px;
-		}
+	and (max-width: 1000px)
+	and (min-width: 1100px) {
+
+	}
+
+/* Display second image in right column */
+@media screen
+	and (max-width: 1000px)
+	and (min-width: 900px) {
+
+	}
+
+/* Display third image in left column */
+@media screen
+	and (max-width: 900px)
+	and (min-width: 800px) {
+
+	}
+
+/* Display third image in right column */
+@media screen
+	and (min-width: 700px)
+	and (max-width: 800px) {
+
+	}
+
+/* Display bottom left image */
+@media screen
+	and (min-width: 600px)
+	and (max-width: 700px) {
+
+	}
+
+/* Display bottom right image */
+@media screen 
+	and (max-width: 600px) {
+
 	}

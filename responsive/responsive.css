@@ -27,7 +27,7 @@
 	and (min-width: 1000px)
 	and (max-width: 1100px) {
 		.homer {
-
+			background:url(homer.jpg) 0px -125px;
 		}
 	}
 

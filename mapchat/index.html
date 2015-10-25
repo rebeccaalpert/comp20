@@ -70,11 +70,12 @@
 				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			
 				// Ming's server https://secret-about-box.herokuapp.com/sendLocation takes three variables (username, lat, long, and message)// and returns JSON feed of the locations of the people in the class if the three parameters are legitimate
-				myLogin = encodeURIComponent("CindyLytle");
+				myLogin = "CindyLytle";
 				// only certain characters are accepted in URIs: only alphanumerics, the special characters "$-_.+!*'(),", and reserved // characters used for their reserved purposes may be used unencoded within a URL. For all other characters (e.g., a 
 				// whitespace), they must be encoded. 
 				myMessage = encodeURIComponent("If every pork chop were perfect, we wouldn't have hot dogs");
-				xhr.open("GET", "https://secret-about-box.herokuapp.com/sendLocation", true);
+				
+				/*xhr.open("GET", "https://secret-about-box.herokuapp.com/sendLocation", true);
 				xhr.onreadystatechange = function() {
 					if (xhr.readyState == 4 && xhr.status == "200") {
 						xhr.send(login=myLogin&lat=myLat&lng=myLong&message=myMessage);
@@ -82,7 +83,7 @@
 					}
 					else {
 						alert("Nope");
-					}
+					}*/
 				}
 		</script>
 </head>

@@ -50,13 +50,14 @@
 				map.panTo(me);
 	
 				// Create a marker
-				var image = "./images/greg.png";
+				var image = './images/greg.png';
 				myMarker = new google.maps.Marker({
 					position: me,
 					title: "Hi, I'm CindyLytle!",
+					map: map,
 					icon: image
 				});
-				myMarker.setMap(map);
+				//myMarker.setMap(map);
 					
 				// Open info window on click of marker
 				google.maps.event.addListener(myMarker, 'click', function() {

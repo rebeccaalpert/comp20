@@ -20,7 +20,7 @@
 						mapTypeId: google.maps.MapTypeId.ROADMAP
 					};
 			var map;
-			var marker;
+			var myMarker;
 			var infowindow = new google.maps.InfoWindow();
 			
 			function init()
@@ -50,16 +50,17 @@
 				map.panTo(me);
 	
 				// Create a marker
-				marker = new google.maps.Marker({
+				myMarker = new google.maps.Marker({
 					position: me,
-					title: "Hi, I'm CindyLytle!"
+					title: "Hi, I'm CindyLytle!";
+					icon: "./images/greg.png"
 				});
-				marker.setMap(map);
+				myMarker.setMap(map);
 					
 				// Open info window on click of marker
-				google.maps.event.addListener(marker, 'click', function() {
-					infowindow.setContent(marker.title);
-					infowindow.open(map, marker);
+				google.maps.event.addListener(myMarker, 'click', function() {
+					infowindow.setContent(myMarker.title);
+					infowindow.open(map, myMarker);
 				});
 			}
 

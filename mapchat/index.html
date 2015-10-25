@@ -34,7 +34,7 @@
 					navigator.geolocation.getCurrentPosition(function(position) {
 						myLat = position.coords.latitude;
 						myLng = position.coords.longitude;
-						//getJSON(myLat, myLng); // use location info to get JSON data from Ming
+						getJSON(myLat, myLng); // use location info to get JSON data from Ming
 						renderMap();
 					});
 				}
@@ -66,7 +66,6 @@
 					map: map,
 					icon: image
 				});
-				//myMarker.setMap(map);
 					
 				// Open info window on click of marker
 				google.maps.event.addListener(myMarker, 'click', function() {
@@ -77,9 +76,9 @@
 
 			function getJSON()
 			{
-				//var xhr = new XMLHttpRequest();
+				var xhr = new XMLHttpRequest();
 				// In order to execute HTTP POST using the JavaScript XMLHttpRequest, you need to add this parameter to the HTTP request header
-				//xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			
 				// Ming's server https://secret-about-box.herokuapp.com/sendLocation takes three variables (username, lat, long, and message)// and returns JSON feed of the locations of the people in the class if the three parameters are legitimate
 				myLogin = "CindyLytle";

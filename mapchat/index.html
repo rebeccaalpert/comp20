@@ -89,7 +89,7 @@
 				xhr.open("POST", "https://secret-about-box.herokuapp.com/sendLocation", true);
 				xhr.onreadystatechange = function() {
 					if (xhr.readyState == 4 && xhr.status == "200") {
-						xhr.send(login=myLogin&lat=myLat&lng=myLong&message=myMessage);
+						xhr.send("login="+myLogin+"&lat="+myLat+"&lng="+myLong+"&message="+myMessage);
 						alert("Got something");
 					}
 					else if (xhr.readyState == 4 && xhr.status != "200") {

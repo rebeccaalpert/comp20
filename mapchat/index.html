@@ -86,8 +86,8 @@
 				// whitespace), they must be encoded. 
 				myMessage = encodeURIComponent("If every pork chop were perfect, we wouldn't have hot dogs");
 				
-				/*xhr.open("GET", "https://secret-about-box.herokuapp.com/sendLocation", true);
-				xhr.onreadystatechange = function() {
+				xhr.open("GET", "https://secret-about-box.herokuapp.com/sendLocation", true);
+				/*xhr.onreadystatechange = function() {
 					if (xhr.readyState == 4 && xhr.status == "200") {
 						xhr.send(login=myLogin&lat=myLat&lng=myLong&message=myMessage);
 						alert("Got something");

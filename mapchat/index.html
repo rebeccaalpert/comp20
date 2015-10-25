@@ -92,10 +92,11 @@
 						xhr.send("login="+myLogin+"&lat="+myLat+"&lng="+myLong+"&message="+myMessage);
 						alert("Got something");
 					}
-					else if (xhr.readyState == 4 && xhr.status != "200") {
+					else {
 						alert("Nope");
 					}
-				}
+				};
+			}
 		</script>
 </head>
 

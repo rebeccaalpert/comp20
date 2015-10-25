@@ -1,4 +1,4 @@
-Comp 20 Assignment 2: mapchat
+#Comp 20 Assignment 2: mapchat
 
 What aspects of the work have been correctly implemented and what have not:
 * Right now, it just shows a map with a custom marker message at my location

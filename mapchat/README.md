@@ -13,3 +13,4 @@ Number of hours spent working on the assignment:
 References
 * [Geolocation map base HTML/Javascript](https://github.com/tuftsdev/WebProgramming/blob/gh-pages/examples/google_maps/geolocation_map.html) and [CSS](https://github.com/tuftsdev/WebProgramming/blob/gh-pages/examples/google_maps/geolocation_map_style.css) courtesy of Ming Chow
 * I learned how to implement a [custom Google Maps marker](https://developers.google.com/maps/documentation/javascript/markers) courtesy of Google Developers
+* [Steven Universe Greg image](http://steven-universe.wikia.com/wiki/File:Young_Greg_Full_Body.png) courtesy of the Steven Universe Wikia

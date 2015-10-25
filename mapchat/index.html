@@ -27,7 +27,6 @@
 			{
 				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 				getMyLocation();
-				getJSON();
 			}
 			
 			function getMyLocation() {
@@ -35,6 +34,7 @@
 					navigator.geolocation.getCurrentPosition(function(position) {
 						myLat = position.coords.latitude;
 						myLng = position.coords.longitude;
+						getJSON(myLat, myLng); // use location info to get JSON data from Ming
 						renderMap();
 					});
 				}
@@ -52,7 +52,7 @@
 				// Create a marker
 				marker = new google.maps.Marker({
 					position: me,
-					title: "Here I Am!"
+					title: "Hi, I'm CindyLytle!"
 				});
 				marker.setMap(map);
 					
@@ -74,15 +74,14 @@
 				// only certain characters are accepted in URIs: only alphanumerics, the special characters "$-_.+!*'(),", and reserved // characters used for their reserved purposes may be used unencoded within a URL. For all other characters (e.g., a 
 				// whitespace), they must be encoded. 
 				myMessage = encodeURIComponent("If every pork chop were perfect, we wouldn't have hot dogs");
-					xhr.open("GET", "https://secret-about-box.herokuapp.com/sendLocation", true);
-					xhr.onreadystatechange = function() {
-						if (xhr.readyState == 4 && xhr.status == "200") {
-							xhr.send(login=myLogin&lat=myLat&lng=myLong&message=myMessage);
-							alert("Got something");
-						}
-						else {
-							alert("Nope");
-						}
+				xhr.open("GET", "https://secret-about-box.herokuapp.com/sendLocation", true);
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState == 4 && xhr.status == "200") {
+						xhr.send(login=myLogin&lat=myLat&lng=myLong&message=myMessage);
+						alert("Got something");
+					}
+					else {
+						alert("Nope");
 					};
 				}
 		</script>

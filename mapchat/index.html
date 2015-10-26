@@ -88,6 +88,8 @@
 				// In order to execute HTTP POST using the JavaScript XMLHttpRequest, you need to add this parameter to the HTTP request header
 				xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 				console.log("XHR set");
+				xhr.send(null);
+				
 				xhr.onreadystatechange = function() {
 					console.log("waiting...");
 					if (xhr.readyState == 4) {

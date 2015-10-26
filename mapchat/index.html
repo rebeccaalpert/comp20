@@ -93,7 +93,7 @@
 				xhr.onreadystatechange = function() {
 					if (xhr.readyState == 4) {
 						if (xhr.status == "200") { // got the data
-							var jsonData = JSON.parse(xmlhttp.responseText);
+							var jsonData = JSON.parse(xhr.responseText);
 							console.log(jsonData);
 						} else { // didn't get the data
 						alert("Didn't get any data from the server. Please try again later.");

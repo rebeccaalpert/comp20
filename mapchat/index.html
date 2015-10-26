@@ -39,7 +39,7 @@
 					});
 				}
 				else {
-					alert("Geolocation is not supported by your web browser.  What a shame!");
+					alert("Geolocation is not supported by your web browser. What a shame!");
 				}
 			}
 			function renderMap()
@@ -87,17 +87,15 @@
 				xhr.open("POST", "https://secret-about-box.herokuapp.com/sendLocation", true);
 				// In order to execute HTTP POST using the JavaScript XMLHttpRequest, you need to add this parameter to the HTTP request header
 				xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-				console.log("XHR set");
 				
-				xhr.send("login="+myLogin+"&lat="+myLat+"&lng="+myLong+"&message="+myMessage);
+				jsonData = xhr.send("login="+myLogin+"&lat="+myLat+"&lng="+myLong+"&message="+myMessage);
 
 				xhr.onreadystatechange = function() {
-					console.log("waiting...");
 					if (xhr.readyState == 4) {
 						if (xhr.status == "200") { // got the data
-						console.log("Got something");
+						console.log(jsonData);
 						} else { // didn't get the data
-						console.log("Nope");
+						alert("Didn't get any data from the server. Please try again later.");
 						}
 					}
 				}

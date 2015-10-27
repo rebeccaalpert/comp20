@@ -96,7 +96,7 @@
 							var jsonData = JSON.parse(xhr.responseText);
 							for (count = 0; count < jsonData.length; count++) {
 								// keys: ["_id", "login", "lat", "lng", "message", "created_at"]
-								//classmates = ["login": jsonData[count]["login"], ];
+								// var classmates = ["login": jsonData[count]["login"], ];
 							}
 							//renderMap();
 						} else { // didn't get the data
@@ -104,6 +104,26 @@
 						}
 					}
 				}
+			}
+
+			function toRadians(degrees) 
+			{
+				var radians = (degrees * Math.PI) / 180;
+				return radians;
+			}
+
+			function calcHaversineFormula(lat1, long1, lat2, long2) {
+				var R = 6371; // km 
+				var x1 = lat2-lat1;
+				var dLat = x1.toRadians();  
+				var x2 = lon2-lon1;
+				var dLon = x2.toRadians();  
+				var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
+				                Math.cos(lat1.toRadians()) * Math.cos(lat2.toRadians()) * 
+				                Math.sin(dLon/2) * Math.sin(dLon/2);  
+				var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+				var distance = R * c; 
+				return distance;
 			}
 		</script>
 </head>

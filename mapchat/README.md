@@ -1,6 +1,7 @@
 #Comp 20 Assignment 2: mapchat
 
 **What aspects of the work have been correctly implemented and what have not:**
+
 Right now, it:
 * Gets my location and sends data to Ming's server
 * Retrieves and parses the JSON from Ming's server

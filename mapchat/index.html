@@ -94,8 +94,8 @@
 					if (xhr.readyState == 4) {
 						if (xhr.status == "200") { // got the data
 							var jsonData = JSON.parse(xhr.responseText);
-							for (item in jsonData) {
-								console.log(jsonData[message][item]);
+							for (count = 0; count < jsonData.length; count++) {
+								console.log(Object.keys(jsonData[count]));
 							}
 						} else { // didn't get the data
 						alert("Didn't get any data from the server. Please try again later.");

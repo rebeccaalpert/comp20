@@ -133,8 +133,8 @@
 						};
 
 						var myMarker = new google.maps.Marker({
-							position: me,
-							title: "CindyLytle",
+							position: new google.maps.LatLng(lat, lon),
+							title: login,
 							map: map,
 							icon: image
 						});
@@ -149,7 +149,7 @@
 			}
 
 			function addMarker(login, message, lat, lon, distance) {
-				var contentString = '<div id="content">'+'<div id="heading">'+'<p><b>'+login+'</b></p>'+'</div>'+'<div id="body">'+'<p>Message: '+message+'</p>'+'<p>Distance: '+distance+'</p>'+'</div>'+'</div>';
+				var contentString = '<div id="content">'+'<div id="heading">'+'<p><b>'+login+'</b></p>'+'</div>'+'<div id="body">'+'<p>Message: '+message+'</p>'+'<p>Distance: '+distance+' miles'+'</p>'+'</div>'+'</div>';
 				// create info window
 				var infowindow = new google.maps.InfoWindow({
 				   	content: contentString

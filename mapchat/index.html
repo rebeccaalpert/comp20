@@ -221,7 +221,13 @@
 				                Math.sin(dLon/2) * Math.sin(dLon/2);  
 				var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
 				var distance = R * c; 
+				distance = toMiles(distance);
 				return distance;
+			}
+
+			function toMiles(kilometers) {
+				var miles = kilometers * 0.62137;
+				return miles;
 			}
 		</script>
 </head>

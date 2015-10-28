@@ -5,13 +5,14 @@
 Right now, it:
 * Gets my location and sends data to Ming's server
 * Retrieves and parses the JSON from Ming's server
-* Shows a map with a custom marker at my location
+* Shows a map with markers displaying classmates' locations and usernames
+* Shows a map with a custom marker at my location (currently commented out)
 
 **Identify anyone with whom you have collaborated or discussed the assignment:**
 * No one yet. Unless passively reading Piazza counts.
 
 **Number of hours spent working on the assignment:**
-* 5 (so far)
+* 6 (so far)
 
 **References**
 * [Geolocation map base HTML/Javascript](https://github.com/tuftsdev/WebProgramming/blob/gh-pages/examples/google_maps/geolocation_map.html) and [CSS](https://github.com/tuftsdev/WebProgramming/blob/gh-pages/examples/google_maps/geolocation_map_style.css) courtesy of Ming Chow

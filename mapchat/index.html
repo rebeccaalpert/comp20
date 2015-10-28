@@ -124,15 +124,24 @@
 			    // draw classmate markers
 			    // keys: login, message, lat, long, distance
 			    for (count = 0; count < displayData.length; count++) {
-			    	// create marker
-			    	marker = new google.maps.Marker({
-			    		position: new google.maps.LatLng(displayData[count]["lat"], displayData[count]["long"]),
-			    		title: displayData[count]["login"],
+			    	var login = displayData[count]["login"];
+			    	var message = displayData[count]["message"];
+			    	var lat = displayData[count]["lat"];
+			    	var lon = displayData[count]["long"];
+			    	var distance = displayData[count]["distance"];
+			    	var contentString = '<div id="content">'+'<div id="heading">'+'<p><b>'+login+'</b></p>'+'</div>'+'<div id="body">'+'<p>Message: '+message+'</p>'+'<p>Distance: '+distance+'</p>'+'</div>'+'</div>'
+			   		// create info window
+			   		var infowindow = new google.maps.InfoWindow({
+			   			content: contentString
+			   		});
+			   		// create marker
+			    	var marker = new google.maps.Marker({
+			    		position: new google.maps.LatLng(lat, lon),
+			    		title: login,
 			    		map: map
 			    	});
 			    	// open info window on click of marker
-			    	google.maps.event.addListener(marker, 'click', function() {
-			    		infowindow.setContent(marker.title);
+			    	google.maps.addListener('click', function() {
 			    		infowindow.open(map, marker);
 			    	});
 			    }

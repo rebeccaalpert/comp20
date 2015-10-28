@@ -139,9 +139,6 @@
 
 			function renderMap(displayData)
 			{	
-				// center map on my location
-				map.panTo(me);
-
 			    // draw markers
 			    // keys: login, message, lat, long, distance
 			    for (count = 0; count < displayData.length; count++) {
@@ -180,6 +177,9 @@
 						myMarker.addListener('click', function() {
 							infowindow.open(map, myMarker)
 						});
+
+					    // center map on my location
+				        map.panTo(new google.maps.LatLng(lat, lon));
 			    	} else { // not me
 				    	addMarker(login, message, lat, lon, distance);
 				    }

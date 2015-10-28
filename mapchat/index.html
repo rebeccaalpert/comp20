@@ -141,7 +141,7 @@
 			    		map: map
 			    	});
 			    	// open info window on click of marker
-			    	google.maps.addListener('click', function() {
+			    	marker.addListener('click', function() {
 			    		infowindow.open(map, marker);
 			    	});
 			    }

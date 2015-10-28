@@ -7,7 +7,7 @@ Right now, it:
 * Sends my location (latitude, longitude, login, message) to the datastore with all special characters in the message properly encoded
 * Displays my location on the map with a unique marker and info window
 * Retrieves the locations of people in the class
-* Displays the locations of people in the class on the map with an info window for each person containing their login name, message, and distance away from me
+* Displays the locations of people in the class on the map with an info window for each person containing their login name, message, and distance away from me (now in miles!)
 
 **Identify anyone with whom you have collaborated or discussed the assignment:**
 * No one yet. Unless passively reading Piazza counts.

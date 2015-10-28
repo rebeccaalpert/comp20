@@ -114,6 +114,13 @@
 			    	var distance = displayData[count]["distance"];
 
 			    	if (login == "CindyLytle") {
+						var contentString = '<div id="content">'+'<div id="heading">'+'<p><b>'+login+'</b></p>'+'</div>'+'<div id="body">'+'<p>Message: '+message+'</p>'+'</div>'+'</div>';
+						
+						// create custom info window
+						var infowindow = new google.maps.InfoWindow({
+				   			content: contentString
+						});
+
 			    		// Create my custom marker
 						var image = {
 							url: './images/greg-universe.png',
@@ -125,15 +132,15 @@
 		    				anchor: new google.maps.Point(0, 45)
 						};
 
-						myMarker = new google.maps.Marker({
+						var myMarker = new google.maps.Marker({
 							position: me,
 							title: "CindyLytle",
 							map: map,
 							icon: image
 						});
 
-						marker.addListener('click', function()) {
-							infowindow.open(map, marker)
+						myMarker.addListener('click', function()) {
+							infowindow.open(map, myMarker)
 						};
 			    	} else { // not me
 				    	addMarker(login, message, lat, lon, distance);

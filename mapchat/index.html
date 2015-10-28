@@ -97,45 +97,73 @@
 				
 				// Update map and go there...
 				map.panTo(me);
-	
-				// Create my custom marker
-				/*var image = {
-					url: './images/greg-universe.png',
-					// this marker is 27 px wide, 45 px tall
-					size: new google.maps.Size(27, 45),
-					// The origin for this image is (0, 0).
-    				origin: new google.maps.Point(0, 0),
-    				// The anchor for this image is the base of the image
-    				anchor: new google.maps.Point(0, 45)
-				};
-
-				myMarker = new google.maps.Marker({
-					position: me,
-					title: "Hi, I'm CindyLytle!",
-					map: map,
-					icon: image
-				});
 					
-				// Open info window on click of marker
+				/*// Open info window on click of marker
 				google.maps.event.addListener(myMarker, 'click', function() {
 					infowindow.setContent(myMarker.title);
 					infowindow.open(map, myMarker);
 				});*/
-			    // draw classmate markers
+
+			    // draw markers
 			    // keys: login, message, lat, long, distance
 			    for (count = 0; count < displayData.length; count++) {
-			    	// create marker
-			    	marker = new google.maps.Marker({
-			    		position: new google.maps.LatLng(displayData[count]["lat"], displayData[count]["long"]),
-			    		title: displayData[count]["login"],
-			    		map: map
-			    	});
-			    	// open info window on click of marker
-			    	google.maps.event.addListener(marker, 'click', function() {
-			    		infowindow.setContent(marker.title);
-			    		infowindow.open(map, marker);
-			    	});
-			    }
+			    	var login = displayData[count]["login"];
+			    	var message = displayData[count]["message"];
+			    	var lat = displayData[count]["lat"];
+			    	var lon = displayData[count]["long"];
+			    	var distance = displayData[count]["distance"];
+
+			    	if (login == "CindyLytle") {
+						var contentString = '<div id="content">'+'<div id="heading">'+'<p><b>'+login+'</b></p>'+'</div>'+'<div id="body">'+'<p>Message: '+message+'</p>'+'</div>'+'</div>';
+						
+						// create custom info window
+						var infowindow = new google.maps.InfoWindow({
+				   			content: contentString
+						});
+
+			    		// Create my custom marker
+						var image = {
+							url: './images/greg-universe.png',
+							// this marker is 27 px wide, 45 px tall
+							size: new google.maps.Size(27, 45),
+							// The origin for this image is (0, 0).
+		    				origin: new google.maps.Point(0, 0),
+		    				// The anchor for this image is the base of the image
+		    				anchor: new google.maps.Point(0, 45)
+						};
+
+						var myMarker = new google.maps.Marker({
+							position: me,
+							title: "CindyLytle",
+							map: map,
+							icon: image
+						});
+
+						myMarker.addListener('click', function() {
+							infowindow.open(map, myMarker)
+						});
+			    	} else { // not me
+				    	addMarker(login, message, lat, lon, distance);
+				    }
+				}
+			}
+
+			function addMarker(login, message, lat, lon, distance) {
+				var contentString = '<div id="content">'+'<div id="heading">'+'<p><b>'+login+'</b></p>'+'</div>'+'<div id="body">'+'<p>Message: '+message+'</p>'+'<p>Distance: '+distance+'</p>'+'</div>'+'</div>';
+				// create info window
+				var infowindow = new google.maps.InfoWindow({
+				   	content: contentString
+				});
+				// create marker
+				var marker = new google.maps.Marker({
+				    position: new google.maps.LatLng(lat, lon),
+				    title: login,
+				   	map: map
+				});
+				// open info window on click of marker
+				marker.addListener('click', function() {
+				    infowindow.open(map, marker)
+				});
 			}
 
 			function toRadians(degrees) 

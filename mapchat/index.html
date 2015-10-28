@@ -102,7 +102,7 @@
 			    	var distance = displayData[count]["distance"];
 
 			    	if (login == "CindyLytle") { // if it's me
-						var contentString = '<div id="content">'+'<div id="heading">'+'<p><b>'+login+'</b></p>'+'</div>'+'<div id="body">'+'<p>Message: '+message+'</p>'+'</div>'+'</div>';
+						var contentString = '<div id="content">'+'<div id="heading">'+'<p><b>'+login+' (me)'+'</b></p>'+'</div>'+'<div id="body">'+'<p>Message: '+message+'</p>'+'</div>'+'</div>';
 						
 						// create custom info window
 						var infowindow = new google.maps.InfoWindow({
@@ -137,7 +137,7 @@
 			}
 
 			function addMarker(login, message, lat, lon, distance) {
-				var contentString = '<div id="content">'+'<div id="heading">'+'<p><b>'+login+' (me) '+'</b></p>'+'</div>'+'<div id="body">'+'<p>Message: '+message+'</p>'+'<p>Distance: '+distance+' miles'+'</p>'+'</div>'+'</div>';
+				var contentString = '<div id="content">'+'<div id="heading">'+'<p><b>'+login+'</b></p>'+'</div>'+'<div id="body">'+'<p>Message: '+message+'</p>'+'<p>Distance: '+distance+' miles'+'</p>'+'</div>'+'</div>';
 				// create info window
 				var infowindow = new google.maps.InfoWindow({
 				   	content: contentString

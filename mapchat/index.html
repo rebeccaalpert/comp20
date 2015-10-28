@@ -35,43 +35,11 @@
 						myLat = position.coords.latitude;
 						myLng = position.coords.longitude;
 						getJSON(myLat, myLng); // use location info to get JSON data from Ming
-						renderMap();
 					});
 				}
 				else {
 					alert("Geolocation is not supported by your web browser. What a shame!");
 				}
-			}
-			function renderMap()
-			{
-				me = new google.maps.LatLng(myLat, myLng);
-				
-				// Update map and go there...
-				map.panTo(me);
-	
-				// Create a marker
-				var image = {
-					url: './images/greg-universe.png',
-					// this marker is 27 px wide, 45 px tall
-					size: new google.maps.Size(27, 45),
-					// The origin for this image is (0, 0).
-    				origin: new google.maps.Point(0, 0),
-    				// The anchor for this image is the base of the image
-    				anchor: new google.maps.Point(0, 45)
-				};
-
-				myMarker = new google.maps.Marker({
-					position: me,
-					title: "Hi, I'm CindyLytle!",
-					map: map,
-					icon: image
-				});
-					
-				// Open info window on click of marker
-				google.maps.event.addListener(myMarker, 'click', function() {
-					infowindow.setContent(myMarker.title);
-					infowindow.open(map, myMarker);
-				});
 			}
 
 			function getJSON(myLat, myLong)
@@ -94,16 +62,80 @@
 					if (xhr.readyState == 4) {
 						if (xhr.status == "200") { // got the data
 							var jsonData = JSON.parse(xhr.responseText);
-							for (count = 0; count < jsonData.length; count++) {
-								// keys: ["_id", "login", "lat", "lng", "message", "created_at"]
-								// var classmates = ["login": jsonData[count]["login"], ];
-							}
-							//renderMap();
+							processData(jsonData, myLat, myLong);
 						} else { // didn't get the data
 						alert("Didn't get any data from the server. Please try again later.");
 						}
 					}
 				}
+			}
+
+			function processData(jsonData, myLat, myLong)
+			{
+				displayData = new Array();
+				for (count = 0; count < jsonData.length; count++) {
+					// keys: ["_id", "login", "lat", "lng", "message", "created_at"]
+					var theirLogin = jsonData[count]["login"];
+					var theirMessage = jsonData[count]["message"];
+					var theirLat = jsonData[count]["lat"];
+					var theirLong = jsonData[count]["lng"];
+					var distanceFromMe = getDistance(myLat, myLong, theirLat, theirLong);
+					var classmate = new Object();
+					classmate["login"] = theirLogin;
+					classmate["message"] = theirMessage;
+					classmate["lat"] = theirLat;
+					classmate["long"] = theirLong;
+					classmate["distance"] = distanceFromMe;
+					displayData.push(classmate);
+				}
+				renderMap(displayData);
+			}
+
+			function renderMap(displayData)
+			{
+				me = new google.maps.LatLng(myLat, myLng);
+				
+				// Update map and go there...
+				map.panTo(me);
+	
+				// Create my custom marker
+				/*var image = {
+					url: './images/greg-universe.png',
+					// this marker is 27 px wide, 45 px tall
+					size: new google.maps.Size(27, 45),
+					// The origin for this image is (0, 0).
+    				origin: new google.maps.Point(0, 0),
+    				// The anchor for this image is the base of the image
+    				anchor: new google.maps.Point(0, 45)
+				};
+
+				myMarker = new google.maps.Marker({
+					position: me,
+					title: "Hi, I'm CindyLytle!",
+					map: map,
+					icon: image
+				});
+					
+				// Open info window on click of marker
+				google.maps.event.addListener(myMarker, 'click', function() {
+					infowindow.setContent(myMarker.title);
+					infowindow.open(map, myMarker);
+				});*/
+			    // draw classmate markers
+			    // keys: login, message, lat, long, distance
+			    for (count = 0; count < displayData.length; count++) {
+			    	// create marker
+			    	marker = new google.maps.Marker({
+			    		position: new google.maps.LatLng(displayData[count]["lat"], displayData[count]["long"]),
+			    		title: displayData[count]["login"],
+			    		map: map
+			    	});
+			    	// open info window on click of marker
+			    	google.maps.event.addListener(marker, 'click', function() {
+			    		infowindow.setContent(marker.title);
+			    		infowindow.open(map, marker);
+			    	});
+			    }
 			}
 
 			function toRadians(degrees) 
@@ -112,14 +144,14 @@
 				return radians;
 			}
 
-			function calcHaversineFormula(lat1, long1, lat2, long2) {
+			function getDistance(lat1, long1, lat2, long2) {
 				var R = 6371; // km 
 				var x1 = lat2-lat1;
-				var dLat = x1.toRadians();  
-				var x2 = lon2-lon1;
-				var dLon = x2.toRadians();  
+				var dLat = toRadians(x1);  
+				var x2 = long2-long1;
+				var dLon = toRadians(x2);  
 				var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
-				                Math.cos(lat1.toRadians()) * Math.cos(lat2.toRadians()) * 
+				                Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) * 
 				                Math.sin(dLon/2) * Math.sin(dLon/2);  
 				var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
 				var distance = R * c; 

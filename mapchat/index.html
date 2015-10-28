@@ -83,6 +83,8 @@
 					var classmate = new Object();
 					classmate["login"] = theirLogin;
 					classmate["message"] = theirMessage;
+					classmate["lat"] = theirLat;
+					classmate["long"] = theirLong;
 					classmate["distance"] = distanceFromMe;
 					displayData.push(classmate);
 				}
@@ -96,8 +98,8 @@
 				// Update map and go there...
 				map.panTo(me);
 	
-				// Create a marker
-				var image = {
+				// Create my custom marker
+				/*var image = {
 					url: './images/greg-universe.png',
 					// this marker is 27 px wide, 45 px tall
 					size: new google.maps.Size(27, 45),
@@ -118,7 +120,22 @@
 				google.maps.event.addListener(myMarker, 'click', function() {
 					infowindow.setContent(myMarker.title);
 					infowindow.open(map, myMarker);
-				});
+				});*/
+			    // draw classmate markers
+			    // keys: login, message, lat, long, distance
+			    for (count = 0; count < displayData.length; count++) {
+			    	// create marker
+			    	marker = new google.maps.Marker({
+			    		position: new google.maps.LatLng(displayData[count]["lat"], displayData[count]["long"]),
+			    		title: displayData[count]["login"],
+			    		map: map
+			    	});
+			    	// open info window on click of marker
+			    	google.maps.event.addListener(marker, 'click', funcion() {
+			    		infowindow.setContent(marker.title);
+			    		infowindow.open(map, marker);
+			    	});
+			    }
 			}
 
 			function toRadians(degrees) 

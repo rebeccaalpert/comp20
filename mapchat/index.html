@@ -13,7 +13,7 @@
 			var myLng = 0;
 			var me = new google.maps.LatLng(myLat, myLng);
 			var myOptions = {
-						zoom: 15, // The larger the zoom number, the bigger the zoom
+						zoom: 13, // The larger the zoom number, the bigger the zoom
 						center: me,
 						mapTypeId: google.maps.MapTypeId.ROADMAP
 					};
@@ -121,7 +121,7 @@
 						};
 
 						var myMarker = new google.maps.Marker({
-							position: me,
+							position: new google.maps.LatLng(lat, lon),
 							title: login,
 							map: map,
 							icon: image

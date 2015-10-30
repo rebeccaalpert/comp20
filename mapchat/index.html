@@ -140,7 +140,7 @@
 			}
 
 			function addMarker(login, message, lat, lon, distance) {
-				var contentString = '<div id="content">'+'<div id="heading">'+'<p><b>'+login+'</b></p>'+'</div>'+'<div id="body">'+'<p>Message: '+message+'</p>'+'<p>Distance: '+distance+' miles'+'</p>'+'</div>'+'</div>';
+				var contentString = '<div id="content">'+'<div id="heading">'+'<p><b>'+login+'</b></p>'+'</div>'+'<div id="body">'+'<p><span class="bold">Message: </span>'+message+'</p>'+'<p><span class="bold">Distance: </span>'+distance+' miles away'+'</p>'+'</div>'+'</div>';
 				// create info window
 				var infowindow = new google.maps.InfoWindow({
 				   	content: contentString

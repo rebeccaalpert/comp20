@@ -115,18 +115,18 @@
 
 			    // Create my custom marker
 				var image = {
-					url: './images/greg-universe.png',
-					// this marker is 27 px wide, 45 px tall
-					size: new google.maps.Size(27, 45),
+					url: './images/greg-universe-larger.png',
+					// this marker is 58 px wide, 93 px tall
+					size: new google.maps.Size(58, 93),
 					// The origin for this image is (0, 0).
 		    		origin: new google.maps.Point(0, 0),
 		    		// The anchor for this image is the base of the image
-		    		anchor: new google.maps.Point(0, 45)
+		    		anchor: new google.maps.Point(0, 93)
 				};
 
 				var myMarker = new google.maps.Marker({
 					position: myPosition,
-					title: login,
+					title: myLogin,
 					map: map,
 					icon: image
 				});

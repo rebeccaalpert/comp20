@@ -13,7 +13,7 @@ Right now, it:
 * No one yet. Unless passively reading Piazza counts.
 
 **Number of hours spent working on the assignment:**
-* 7 (so far)
+* 8 (so far)
 
 **References**
 * [Geolocation map base HTML/Javascript](https://github.com/tuftsdev/WebProgramming/blob/gh-pages/examples/google_maps/geolocation_map.html) and [CSS](https://github.com/tuftsdev/WebProgramming/blob/gh-pages/examples/google_maps/geolocation_map_style.css) courtesy of Ming Chow

@@ -47,13 +47,14 @@
 				var myLogin = "CindyLytle";
 				// only certain characters are accepted in URIs: only alphanumerics, the special characters "$-_.+!*'(),", and reserved // characters used for their reserved purposes may be used unencoded within a URL. For all other characters (e.g., a 
 				// whitespace), they must be encoded. 
-				var myMessage = encodeURIComponent("If every pork chop were perfect, we wouldn't have hot dogs");
+				var myMessage = "If every pork chop were perfect, we wouldn't have hot dogs";
+				var myEncodedMessage = encodeURIComponent(myMessage);
 				
 				xhr.open("POST", "https://secret-about-box.herokuapp.com/sendLocation", true);
 				// In order to execute HTTP POST using the JavaScript XMLHttpRequest, you need to add this parameter to the HTTP request header
 				xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 				
-				xhr.send("login="+myLogin+"&lat="+myLat+"&lng="+myLong+"&message="+myMessage);
+				xhr.send("login="+myLogin+"&lat="+myLat+"&lng="+myLong+"&message="+myEncodedMessage);
 
 				xhr.onreadystatechange = function() {
 					if (xhr.readyState == 4) {

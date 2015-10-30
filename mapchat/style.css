@@ -1,6 +1,6 @@
 html {
 	height: 100%;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Arial, sans-serif;
 }
 
 body {
@@ -17,7 +17,7 @@ body {
 #heading {
 	color: #333333;
 	font-weight: bold;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Arial, sans-serif;
 	font-size: 25px;
 	line-height: 22px;
 	padding-top: 1em;
@@ -27,10 +27,14 @@ body {
 
 #body {
 	color: #333333;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Arial, sans-serif;
 	font-size: 18px;
 	line-height: 22px;
 	padding-left: 1em;
 	padding-right: 1em;
 	padding-bottom: 1em;
+}
+
+.bold {
+	font-weight: bold;
 }

@@ -59,7 +59,7 @@
 					if (xhr.readyState == 4) {
 						if (xhr.status == "200") { // got the data
 							var jsonData = JSON.parse(xhr.responseText);
-							processData(jsonData, myLat, myLong);
+							processData(jsonData, myLogin, myMessage, myLat, myLong);
 						} else { // didn't get the data
 						alert("Didn't get any data from the server. Please try again later.");
 						}
@@ -67,7 +67,7 @@
 				}
 			}
 
-			function processData(jsonData, myLat, myLong)
+			function processData(jsonData, myLogin, myMessage, myLat, myLong)
 			{
 				displayData = new Array();
 				for (count = 0; count < jsonData.length; count++) {
@@ -85,61 +85,12 @@
 					classmate["distance"] = distanceFromMe;
 					displayData.push(classmate);
 				}
-				renderMap(displayData);
+				renderMap(displayData, myLogin, myMessage, myLat, myLong);
 			}
 
-			function renderMap(displayData)
-			{
-				var request = new XMLHttpRequest();
-			
-				// Ming's server https://secret-about-box.herokuapp.com/sendLocation takes three variables (username, lat, long, and message)// and returns JSON feed of the locations of the people in the class if the three parameters are legitimate
-				myLogin = "CindyLytle";
-				// only certain characters are accepted in URIs: only alphanumerics, the special characters "$-_.+!*'(),", and reserved // characters used for their reserved purposes may be used unencoded within a URL. For all other characters (e.g., a 
-				// whitespace), they must be encoded. 
-				myMessage = encodeURIComponent("If every pork chop were perfect, we wouldn't have hot dogs");
-				
-				request.open("POST", "https://secret-about-box.herokuapp.com/sendLocation", true);
-				// In order to execute HTTP POST using the JavaScript XMLHttpRequest, you need to add this parameter to the HTTP request header
-				request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-				
-				request.send("login="+myLogin+"&lat="+myLat+"&lng="+myLong+"&message="+myMessage);
-
-				request.onreadystatechange = function() {
-					if (request.readyState == 4) {
-						if (request.status == "200") { // got the data
-							var jsonData = JSON.parse(request.responseText);
-							processData(jsonData, myLat, myLong);
-						} else { // didn't get the data
-							alert("Didn't get any data from the server. Please try again later.");
-						}
-					}
-				}
-			}
-
-			function processData(jsonData, myLat, myLong)
-			{
-				displayData = new Array();
-				for (count = 0; count < jsonData.length; count++) {
-					// jsonData keys: ["_id", "login", "lat", "lng", "message", "created_at"]
-					var theirLogin = jsonData[count]["login"];
-					var theirMessage = jsonData[count]["message"];
-					var theirLat = jsonData[count]["lat"];
-					var theirLong = jsonData[count]["lng"];
-					var distanceFromMe = getDistance(myLat, myLong, theirLat, theirLong);
-					var classmate = new Object();
-					classmate["login"] = theirLogin;
-					classmate["message"] = theirMessage;
-					classmate["lat"] = theirLat;
-					classmate["long"] = theirLong;
-					classmate["distance"] = distanceFromMe;
-					displayData.push(classmate);
-				}
-				renderMap(displayData);
-			}
-
-			function renderMap(displayData)
+			function renderMap(displayData, myLogin, myMessage, myLat, myLong)
 			{	
-			    // draw markers
+			    // draw classmate markers
 			    // keys: login, message, lat, long, distance
 			    for (count = 0; count < displayData.length; count++) {
 			    	var login = displayData[count]["login"];
@@ -148,42 +99,43 @@
 			    	var lon = displayData[count]["long"];
 			    	var distance = displayData[count]["distance"];
 
-			    	if (login == "CindyLytle") {
-						var contentString = '<div id="content">'+'<div id="heading">'+'<p><b>'+login+' (me)'+'</b></p>'+'</div>'+'<div id="body">'+'<p>Message: '+message+'</p>'+'</div>'+'</div>';
-						
-						// create custom info window
-						var infowindow = new google.maps.InfoWindow({
-				   			content: contentString
-						});
-
-			    		// Create my custom marker
-						var image = {
-							url: './images/greg-universe.png',
-							// this marker is 27 px wide, 45 px tall
-							size: new google.maps.Size(27, 45),
-							// The origin for this image is (0, 0).
-		    				origin: new google.maps.Point(0, 0),
-		    				// The anchor for this image is the base of the image
-		    				anchor: new google.maps.Point(0, 45)
-						};
-
-						var myMarker = new google.maps.Marker({
-							position: new google.maps.LatLng(lat, lon),
-							title: login,
-							map: map,
-							icon: image
-						});
-
-						myMarker.addListener('click', function() {
-							infowindow.open(map, myMarker)
-						});
-
-					    // center map on my location
-				        map.panTo(new google.maps.LatLng(lat, lon));
-			    	} else { // not me
-				    	addMarker(login, message, lat, lon, distance);
-				    }
+					addMarker(login, message, lat, lon, distance);
 				}
+
+				// draw custom marker to cover up dupe "me" info from server
+				var contentString = '<div id="content">'+'<div id="heading">'+'<p><b>'+myLogin+' (me)'+'</b></p>'+'</div>'+'<div id="body">'+'<p>Message: '+myMessage+'</p>'+'</div>'+'</div>';
+						
+				// create custom info window
+				var infowindow = new google.maps.InfoWindow({
+				   	content: contentString
+				});
+
+				var myPosition = new google.maps.LatLng(myLat, myLong);
+
+			    // Create my custom marker
+				var image = {
+					url: './images/greg-universe.png',
+					// this marker is 27 px wide, 45 px tall
+					size: new google.maps.Size(27, 45),
+					// The origin for this image is (0, 0).
+		    		origin: new google.maps.Point(0, 0),
+		    		// The anchor for this image is the base of the image
+		    		anchor: new google.maps.Point(0, 45)
+				};
+
+				var myMarker = new google.maps.Marker({
+					position: myPosition,
+					title: login,
+					map: map,
+					icon: image
+				});
+
+				myMarker.addListener('click', function() {
+					infowindow.open(map, myMarker)
+				});
+
+				// center map on my location
+				map.panTo(myPosition);				
 			}
 
 			function addMarker(login, message, lat, lon, distance) {

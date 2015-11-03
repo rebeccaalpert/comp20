@@ -13,3 +13,4 @@ So far:
 * 0 hours
 
 **References:**
+* [How to submit input when return key pressed](http://api.jquery.com/keypress/)

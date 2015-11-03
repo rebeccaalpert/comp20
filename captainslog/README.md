@@ -8,11 +8,13 @@ So far:
 * Messages are displayed in the "log" section with latest message displayed first, at the top
 * Messages are redisplayed (from local storage) on return to the page
 
+Please note: Extra junk is displayed in Firefox (length, clear, removeItem, setItem, getItem, key). Works better in Chrome.
+
 **Identify anyone with whom you have collaborated or discussed the assignment:**
 * No one
 
 **Hours spent completing the assignment:**
-* 1 hours
+* 1.5 hours
 
 **References:**
 * [Date Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)

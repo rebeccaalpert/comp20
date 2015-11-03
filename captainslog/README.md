@@ -15,5 +15,6 @@ So far:
 * 1 hours
 
 **References:**
+* [Date Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
 * [How to submit input when return key pressed](http://api.jquery.com/keypress/)
 * [How to loop through key/value pairs in local storage using .each()](http://stackoverflow.com/questions/3138564/looping-through-localstorage-in-html5-and-javascript)

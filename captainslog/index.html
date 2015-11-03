@@ -6,6 +6,8 @@
 	<title>Captain's Log</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script>
+		var output = "";
+
 		$(window).load(function() { // display stored messages
 			$.each(localStorage, function(key, value){
 				output = "<p>" + key + " - " + value + "</p>\n";
@@ -19,6 +21,7 @@
      				event.preventDefault();
      				// Sat Jul 23 02:16:57 2005 - Hello all!
      				var timestamp = new Date();
+     				timestamp = timestamp.toLocaleDateString() + " " + timestamp.toLocaleTimeString();
 					var message = $('#msg').val();
         			$('#log').prepend(timestamp+" - "+message+"<br />");
         			localStorage.setItem(timestamp, message);

@@ -11,7 +11,7 @@ So far:
 * No one
 
 **Hours spent completing the assignment:**
-* .5 hours
+* 1 hours
 
 **References:**
 * [How to submit input when return key pressed](http://api.jquery.com/keypress/)

@@ -15,3 +15,4 @@ So far:
 
 **References:**
 * [How to submit input when return key pressed](http://api.jquery.com/keypress/)
+* [How to loop through key/value pairs in local storage using .each()](http://stackoverflow.com/questions/3138564/looping-through-localstorage-in-html5-and-javascript)

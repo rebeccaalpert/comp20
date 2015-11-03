@@ -6,7 +6,17 @@
 	<title>Captain's Log</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script>
-	  // Your work will be done here...
+		// Sat Jul 23 02:16:57 2005 - Hello all!
+	    $(document).ready(function(){
+	    	$( "#msg" ).keypress(function( event ) {
+  				if ( event.which == 13 ) { // 13 == return key
+     				event.preventDefault();
+     				var timestamp = new Date();
+					var message = $('#msg').val();
+        			$('#log').prepend(timestamp+" - "+message+"<br />");
+  				}
+  			});
+		});
 	</script>
 </head>
 

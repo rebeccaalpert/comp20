@@ -6,6 +6,7 @@ Comp 20 Lab 7
 So far:
 * When the enter key is pressed, a timestamp and message are written to the screen
 * Messages are displayed in the "log" section with latest message displayed first, at the top
+* Messages are redisplayed (from local storage) on return to the page
 
 **Identify anyone with whom you have collaborated or discussed the assignment:**
 * No one

@@ -13,12 +13,12 @@
 	<p>Prepared by Rebecca Alpert</p>
 
 	<div id="content">
-	<h1>Introduction</h1>
-	<p>This document assesses the security of the <a href="https://arcane-thicket-5975.herokuapp.com/">MapChat web application</a> developed by Dan Baigel for Comp 20 assignments <a href="http://tuftsdev.github.io/WebProgramming/assignments/a2.html">2</a> and <a href="http://tuftsdev.github.io/WebProgramming/assignments/a3.html">3</a>.</p>
-	<p>MapChat is a web application which maintains locations and messages submitted by its users. The server possesses several functions: a POST /sendLocation API (which allows data input and retrieval), a GET /latest.json API (which allows for retrieval of the latest submission for a given user), and a web interface that displays the list of locations and messages submitted by all logins.</p>
-	<p>I was assigned to identify security vulnerabilities in the application and suggest solutions. This analysis will not address one glaring flaw in MapChat's design&mdash;the username system. It is simple to submit false data for a given user once an approved login is identified (just take one look at the server's web interface).</p>
+	<h2>Introduction</h2>
+	<p>This document assesses the security of the MapChat <a href="https://arcane-thicket-5975.herokuapp.com/">server</a> and <a href="http://tuftsdev.github.io/comp20-dbaigel/mapchat/">web application</a> developed by Dan Baigel for Comp 20 assignments <a href="http://tuftsdev.github.io/WebProgramming/assignments/a2.html">2</a> and <a href="http://tuftsdev.github.io/WebProgramming/assignments/a3.html">3</a>.</p>
+	<p>MapChat is a web application which maintains locations and messages submitted by its users. The server possesses several functions: a POST /sendLocation API (which allows data input and retrieval), a GET /latest.json API (which allows for retrieval of the latest submission for a given user), and a web interface that displays the list of locations and messages submitted by all logins. The web application inputs data for a given user based on the client's location and displays all of the users in the database on a map.</p>
+	<p>I was assigned to identify security vulnerabilities in the application and suggest solutions for them. This analysis will not address one glaring flaw in MapChat's design&mdash;the username system. It is simple to submit false data for a given user once an approved login is identified (this is simple&mdash;just take one look at the server's web interface or at the web application).</p>
 
-	<h1>Methodology</h1>
+	<h2>Methodology</h2>
 	<p>Initially, I performed black-box testing using curl. Once I completed my attacks, I reviewed the code in an attempt to identify other security or privacy risks.</p>
 
 	<h2>Abstract of Findings</h2>
@@ -37,22 +37,18 @@
 				<li>Similarly, running <code>curl --data "login=CindyLytle&amp;lat=70&amp;lng=81&amp;message=&lt;iframe width='560' height='315' src='https://www.youtube.com/embed/ekK7peRxKGc' frameborder='0' allowfullscreen&gt;&lt;/iframe&gt;" https://arcane-thicket-5975.herokuapp.com/sendLocation/</code> will embed a YouTube video directly in the index page:
 					<div><img src="./images/index.html.png" alt="index without redirect" /><img src="./images/index.html.v3.png" alt="index with video embed" /></div>
 				</li>
-				<li>This issue can be resolved by sanitizing user input before it is saved to the database. You could use a third-party library like <a href="https://github.com/yahoo/xss-filters">XSS Filters</a>. Alternatively, a regular expression could be used to remove dangerous characters (such as the brackets in <code>&lt;script&gt;</code>) as follows:<br />
-				<code>var string = "&gt;script&lt;";<br />
-					string.replace(/[^a-zA-Z0-9 ]/g, "");</code><br />
-					Sanitization could also be performed on data already in the database by running <code>db.collection.update()</code>.</li>
+				<li>This issue can be resolved by sanitizing user input before it is saved to the database. You could use a third-party library like <a href="https://github.com/yahoo/xss-filters">XSS Filters</a>. Alternatively, a regular expression could be used to remove dangerous characters (such as the brackets in <code>&lt;script&gt;</code>) as follows: <code>var string = "&lt;script&gt;"; string.replace(/[^a-zA-Z0-9 ]/g, "");</code>. Sanitization could also be performed on data already in the database by running <code>db.collection.update()</code>.</li>
 			</ul>
 		</li>
 		<li><span class="bold">More Cross-Site Scripting</span>
 			<ul>
 				<li>Affects <a href="http://tuftsdev.github.io/comp20-dbaigel/mapchat/">client-side MapChat application</a></li>
-				<li>High: This problem makes MapChat a security risk to users of the client-side application. Malicious code could be injected to phish users or perform other malicious behavior. However, the problem can be easily avoided on the client side by sanitizing the data prior to working with it.</li>
+				<li>High: This problem makes MapChat a security risk to users of the client-side application. Malicious code could be injected to ruin the user experience or even steal user information. However, the problem can be easily avoided on the client side by sanitizing the data prior to working with it.</li>
 				<li>Messages can include executable Javascript or HTML. While testing cross-site scripting on the server side, I had run <code>curl --data "login=CindyLytle&amp;lat=70&amp;lng=81&amp;message=&lt;iframe width='560' height='315' src='https://www.youtube.com/embed/ekK7peRxKGc' frameborder='0' allowfullscreen&gt;&lt;/iframe&gt;" https://arcane-thicket-5975.herokuapp.com/sendLocation/</code>. Since it was the most recent submission by user CindyLytle, the data was displayed in the MapChat application, including the embedded YouTube video:
 					<div><img src="./images/mapchat.png" alt="embedded video in MapChat message" /></div>
 				</li>
-				<li>This issue can be resolved by sanitizing messages before they are displayed. You could use a third-party library like <a href="https://github.com/yahoo/xss-filters">XSS Filters</a>. Alternatively, a regular expression could be used to remove dangerous characters (such as the brackets in <code>&lt;script&gt;</code>) as follows:<br />
-				<code>var string = "&gt;script&lt;";<br />
-					string.replace(/[^a-zA-Z0-9 ]/g, "");</code></li>
+				<li>This issue can be resolved by sanitizing messages before they are displayed. You could use a third-party library like <a href="https://github.com/yahoo/xss-filters">XSS Filters</a>. Alternatively, a regular expression could be used to remove dangerous characters (such as the brackets in <code>&lt;script&gt;</code>) as follows:
+				<code>var string = "&lt;script&gt;"; string.replace(/[^a-zA-Z0-9 ]/g, "");</code></li>
 			</ul>
 		</li>
 		<li><span class="bold">Access-Control-Allow-Origin Wildcard</span>
@@ -66,10 +62,10 @@
 		</li>
 	</ol>
 
-	<h1>Conclusion</h1>
+	<h2>Conclusion</h2>
 	<p>MapChat's security vulnerabilities make it unsuitable for public use. It is simple to break both the application itself and those of any clients relying on its data. Following the above recommendations will quickly reduce the application's vulnerability to these attacks.</p>
 	<p>However, MapChat's structural vulnerability&mdash;its username system&mdash;will remain. This vulnerability allows anyone to submit data for any user once the user's login has been identified. Since logins are publicly available on the server's web interface, it's trivial to falsify user data.</p>
-	<p>The best course of action would be to fix the listed vulnerabilities, redesign the login system, and conduct a second, more thorough security analysis.</p>
+	<p>The best course of action would be to fix the listed vulnerabilities, redesign the login system to employ more secure authentication, and conduct a second, more thorough security analysis.</p>
 	</div>
 </body>
 </html>

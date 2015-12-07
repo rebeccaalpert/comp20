@@ -1,5 +1,7 @@
 #Comp 20 Assignment 2: mapchat
 
+Server now points to [my crappy server](https://mysterious-hamlet-3112.herokuapp.com/) rather than Ming's.
+
 **What aspects of the work have been correctly implemented and what have not:**
 
 Right now, it:

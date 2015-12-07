@@ -19,3 +19,5 @@ So far:
 * [Cross Origin Resource Sharing (HTML5 Security Cheatsheet)](https://www.owasp.org/index.php/HTML5_Security_Cheat_Sheet#Cross_Origin_Resource_Sharing)
 * [Security Implications of Adding All Domains to CORS](http://stackoverflow.com/questions/19322973/security-implications-of-adding-all-domains-to-cors-access-control-allow-origin)
 * [When is it Safe to Enable CORS?](http://stackoverflow.com/questions/9713644/when-is-it-safe-to-enable-cors/9725695#9725695)
+* [Validator.js](https://github.com/chriso/validator.js)
+* [XSS-Filters Library](https://github.com/yahoo/xss-filters)

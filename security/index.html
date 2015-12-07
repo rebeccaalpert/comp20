@@ -5,44 +5,71 @@
 	<title>Security</title>
 	<meta charset=utf-8 />
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<link rel="stylesheet" href="main.css">
 </head>
 
 <body>
 	<h1>Security Analysis of Dan Baigel's MapChat Application</h1>
 	<p>Prepared by Rebecca Alpert</p>
 
+	<div id="content">
 	<h1>Introduction</h1>
-	<p>This document assess the security of the <a href="https://arcane-thicket-5975.herokuapp.com/">MapChat web application</a> developed by Dan Baigel for Comp 20 assignments <a href="http://tuftsdev.github.io/WebProgramming/assignments/a2.html">2</a> and <a href="http://tuftsdev.github.io/WebProgramming/assignments/a3.html">3</a>.</p>
-	<p>The web application, according to the specs, retrieves and stores the current location and message of the client if the client's username is within an approved list of usernames, and then retreives and displays the locations and messages of each user on a map. The server possesses several functions: a POST /sendLocation API, a GET /latest.json API, and a homepage that displays the list of locations and messages for all logins.</p>
-	<p>I was assigned to identify at least three security or privacy vulnerabilities in the application.</p>
+	<p>This document assesses the security of the <a href="https://arcane-thicket-5975.herokuapp.com/">MapChat web application</a> developed by Dan Baigel for Comp 20 assignments <a href="http://tuftsdev.github.io/WebProgramming/assignments/a2.html">2</a> and <a href="http://tuftsdev.github.io/WebProgramming/assignments/a3.html">3</a>.</p>
+	<p>MapChat is a web application which maintains locations and messages submitted by its users. The server possesses several functions: a POST /sendLocation API (which allows data input and retrieval), a GET /latest.json API (which allows for retrieval of the latest submission for a given user), and a web interface that displays the list of locations and messages submitted by all logins.</p>
+	<p>I was assigned to identify security vulnerabilities in the application and suggest solutions. This analysis will not address one glaring flaw in MapChat's design&mdash;the username system. It is simple to submit false data for a given user once an approved login is identified (just take one look at the server's web interface).</p>
 
 	<h1>Methodology</h1>
-	<p>Initially, I performed black-box testing using curl.</p>
+	<p>Initially, I performed black-box testing using curl. Once I completed my attacks, I reviewed the code in an attempt to identify other security or privacy risks.</p>
 
-	<h1>Abstract of Findings</h1>
-	<p>Provide an overview of all the security and privacy issues you identified. This section should be written for non-technical managers who do not have technical expertise and do not have time to read the entire document. Write this section using lay language.</p>
+	<h2>Abstract of Findings</h2>
+	<p>MapChat puts too much trust in its users. Anyone in the world can submit data to MapChat as long as they know one of the logins, and MapChat does not screen this data before it stores or uses it. Therefore, anyone in the world can submit malicious code to deface MapChat or defraud users. Third-party websites that rely on MapChat data are also vulnerable to this sort of malicious input unless they take steps to sanitize the data before using it.</p>
 
-	<h1>Issues Found</h1>
-	<p>For each issue that you find, document:
-Issue (e.g., database injection, really bad programming practice)
-Location / page where issue was found
-Severity of issue (e.g., low, medium , or high). Justify your answer.
-Description of issue. How did you find it? A screenshot of problem is excellent.
-Proof of vulnerability. Screenshots are important.
-Resolution. Make recommendation(s) on how issue can be resolved. Show code if possible.</p>
+	<h2>Issues Found</h2>
 	<ol>
-		<li>Issue
+		<li><span class="bold">Cross-Site Scripting</span>
 			<ul>
-				<li>Location</li>
-				<li>Severity</li>
-				<li>Description</li>
-				<li>Proof</li>
-				<li>Resolution</li>
+				<li>Affects POST /sendLocation API</li>
+				<li>High: This problem makes MapChat's data a security risk to client applications. However, the problem can be easily avoided on the client side by sanitizing the data prior to working with it. Problem entries can also be removed or updated by the database administrator.</li>
+				<li>Data submitted via the POST /sendLocation API is not sanitized and can include Javascript or HTML in place of the submitted message. The Javascript or HTML will execute if the client-end code doesn't sanitize the data.</li>
+				<li>For example, running <code>curl --data "login=CindyLytle&amp;lat=70&amp;lng=81&amp;message=&lt;script&gt;window.location='https://youtu.be/ekK7peRxKGc';&lt;/script&gt;" https://arcane-thicket-5975.herokuapp.com/sendLocation/</code> will redirect the server index to an adorable cat video:
+					<div><img src="./images/index.html.png" alt="index without redirect" /><img src="./images/index.html.v2.png" alt="index with redirect" /></div>
+				</li>
+				<li>Similarly, running <code>curl --data "login=CindyLytle&amp;lat=70&amp;lng=81&amp;message=&lt;iframe width='560' height='315' src='https://www.youtube.com/embed/ekK7peRxKGc' frameborder='0' allowfullscreen&gt;&lt;/iframe&gt;" https://arcane-thicket-5975.herokuapp.com/sendLocation/</code> will embed a YouTube video directly in the index page:
+					<div><img src="./images/index.html.png" alt="index without redirect" /><img src="./images/index.html.v3.png" alt="index with video embed" /></div>
+				</li>
+				<li>This issue can be resolved by sanitizing user input before it is saved to the database. You could use a third-party library like <a href="https://github.com/yahoo/xss-filters">XSS Filters</a>. Alternatively, a regular expression could be used to remove dangerous characters (such as the brackets in <code>&lt;script&gt;</code>) as follows:<br />
+				<code>var string = "&gt;script&lt;";<br />
+					string.replace(/[^a-zA-Z0-9 ]/g, "");</code><br />
+					Sanitization could also be performed on data already in the database by running <code>db.collection.update()</code>.</li>
+			</ul>
+		</li>
+		<li><span class="bold">More Cross-Site Scripting</span>
+			<ul>
+				<li>Affects <a href="http://tuftsdev.github.io/comp20-dbaigel/mapchat/">client-side MapChat application</a></li>
+				<li>High: This problem makes MapChat a security risk to users of the client-side application. Malicious code could be injected to phish users or perform other malicious behavior. However, the problem can be easily avoided on the client side by sanitizing the data prior to working with it.</li>
+				<li>Messages can include executable Javascript or HTML. While testing cross-site scripting on the server side, I had run <code>curl --data "login=CindyLytle&amp;lat=70&amp;lng=81&amp;message=&lt;iframe width='560' height='315' src='https://www.youtube.com/embed/ekK7peRxKGc' frameborder='0' allowfullscreen&gt;&lt;/iframe&gt;" https://arcane-thicket-5975.herokuapp.com/sendLocation/</code>. Since it was the most recent submission by user CindyLytle, the data was displayed in the MapChat application, including the embedded YouTube video:
+					<div><img src="./images/mapchat.png" alt="embedded video in MapChat message" /></div>
+				</li>
+				<li>This issue can be resolved by sanitizing messages before they are displayed. You could use a third-party library like <a href="https://github.com/yahoo/xss-filters">XSS Filters</a>. Alternatively, a regular expression could be used to remove dangerous characters (such as the brackets in <code>&lt;script&gt;</code>) as follows:<br />
+				<code>var string = "&gt;script&lt;";<br />
+					string.replace(/[^a-zA-Z0-9 ]/g, "");</code></li>
+			</ul>
+		</li>
+		<li><span class="bold">Access-Control-Allow-Origin Wildcard</span>
+			<ul>
+				<li>Affects POST /sendLocation API</li>
+				<li>High: MapChat stores user-submitted data. Anyone in the world can remotely inject malicious code.</li>
+				<li>Upon review of Dan's code, I found that he had set the following response header: <code>res.header("Access-Control-Allow-Origin", "*");</code></li>
+				<li>The Access-Control-Allow-Origin wildcard, *, allows for sharing with any and all origins. Therefore, any site can send a request and access MapChat's response. Given that MapChat stores user-submitted data, injection of malicious code (such as cross-site-scripting, as we've shown above) is a risk that can affect multiple components of the system.</li>
+				<li>This issue could be resolved by implementing a whitelist of acceptable origins.</li>
+			</ul>
 		</li>
 	</ol>
 
 	<h1>Conclusion</h1>
-	<p>You can also list future considerations and recommendations with costs.</p>
-
+	<p>MapChat's security vulnerabilities make it unsuitable for public use. It is simple to break both the application itself and those of any clients relying on its data. Following the above recommendations will quickly reduce the application's vulnerability to these attacks.</p>
+	<p>However, MapChat's structural vulnerability&mdash;its username system&mdash;will remain. This vulnerability allows anyone to submit data for any user once the user's login has been identified. Since logins are publicly available on the server's web interface, it's trivial to falsify user data.</p>
+	<p>The best course of action would be to fix the listed vulnerabilities, redesign the login system, and conduct a second, more thorough security analysis.</p>
+	</div>
 </body>
 </html>
